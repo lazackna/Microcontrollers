@@ -25,9 +25,9 @@ int main(void)
 	
     while(1)
     {
-        PORTD = 0b01000000;
+        PORTD = 0b10000000;
 		wait(500);
-		PORTD = 0b00100000;
+		PORTD = 0b01000000;
 		wait(500);
     }
 }

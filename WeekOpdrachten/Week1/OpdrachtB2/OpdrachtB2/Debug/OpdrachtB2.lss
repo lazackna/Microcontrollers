@@ -92,7 +92,7 @@ Disassembly of section .text:
 Disassembly of section .text:
 
 000000e0 <__bad_interrupt>:
-  e0:	0c 94 00 00 	jmp	0	; 0x0 <__TEXT_REGION_ORIGIN__>
+  e0:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
 
 Disassembly of section .text.wait:
 
@@ -141,18 +141,18 @@ int main(void)
 	
     while(1)
     {
-        PORTD = 0b01000000;
-  c6:	80 e4       	ldi	r24, 0x40	; 64
+        PORTD = 0b10000000;
+  c6:	80 e8       	ldi	r24, 0x80	; 128
   c8:	82 bb       	out	0x12, r24	; 18
 		wait(500);
   ca:	84 ef       	ldi	r24, 0xF4	; 244
   cc:	91 e0       	ldi	r25, 0x01	; 1
-  ce:	0e 94 52 00 	call	0xa4	; 0xa4 <__data_load_end>
-		PORTD = 0b00100000;
-  d2:	80 e2       	ldi	r24, 0x20	; 32
+  ce:	0e 94 52 00 	call	0xa4	; 0xa4 <_etext>
+		PORTD = 0b01000000;
+  d2:	80 e4       	ldi	r24, 0x40	; 64
   d4:	82 bb       	out	0x12, r24	; 18
 		wait(500);
   d6:	84 ef       	ldi	r24, 0xF4	; 244
   d8:	91 e0       	ldi	r25, 0x01	; 1
-  da:	0e 94 52 00 	call	0xa4	; 0xa4 <__data_load_end>
+  da:	0e 94 52 00 	call	0xa4	; 0xa4 <_etext>
   de:	f3 cf       	rjmp	.-26     	; 0xc6 <main+0x4>
