@@ -22,7 +22,7 @@ void wait (int ms)
 int main(void)
 {
 	DDRD = 0x80; // Pin 7 is output
-	PORTC = 0xFE; // Set PORTC pin 1 to input
+	PORTC = 0xFE; // Set PORTC pin 0 to input
     while(1)
     {
         if (PINC == 0b1)

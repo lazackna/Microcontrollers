@@ -138,7 +138,7 @@ int main(void)
 	DDRD = 0x80; // Pin 7 is output
   a4:	80 e8       	ldi	r24, 0x80	; 128
   a6:	81 bb       	out	0x11, r24	; 17
-	PORTC = 0xFE; // Set PORTC pin 1 to input
+	PORTC = 0xFE; // Set PORTC pin 0 to input
   a8:	8e ef       	ldi	r24, 0xFE	; 254
   aa:	85 bb       	out	0x15, r24	; 21
     while(1)
@@ -148,13 +148,13 @@ int main(void)
   ae:	81 30       	cpi	r24, 0x01	; 1
   b0:	61 f4       	brne	.+24     	; 0xca <main+0x26>
         {
-			PORTD = 0b00000000;
+			PORTD = 0b00000000; // Turn of all the pins.
   b2:	12 ba       	out	0x12, r1	; 18
 			wait(500);
   b4:	84 ef       	ldi	r24, 0xF4	; 244
   b6:	91 e0       	ldi	r25, 0x01	; 1
   b8:	0e 94 67 00 	call	0xce	; 0xce <wait>
-			PORTD = 0b10000000;
+			PORTD = 0b10000000; // Turn on pin 7
   bc:	80 e8       	ldi	r24, 0x80	; 128
   be:	82 bb       	out	0x12, r24	; 18
 			wait(500);
