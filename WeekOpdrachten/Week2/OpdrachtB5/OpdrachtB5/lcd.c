@@ -5,22 +5,7 @@
  *  Author: User
  */ 
 
-#define lcdPort PORTC
-
-#define RS 2
-#define EN 3
-
-#define F_CPU 8e6
-#include <avr/io.h>
-#include <util/delay.h>
-
-void lcd_command ( unsigned char dat );
-void lcd_en(void);
-void init_4bits_mode(void);
-void lcd_write_string(const char *str);
-void lcd_write_data(unsigned char byte);
-void reset(void);
-void set_cursor(int position);
+#include "lcd.h"
 
 int main(void)
 {
@@ -30,9 +15,6 @@ int main(void)
 	reset();
 	set_cursor(4);
 	lcd_write_string("David");
-	
-
-	
 }
 
 void set_cursor(int position){
@@ -49,12 +31,12 @@ void lcd_write_string(const char *str) {
 void lcd_write_data(unsigned char byte) {
 	// First nibble.
 	PORTC = byte;
-	PORTC |= (1<<RS);
+	PORTC |= (1<<LCD_RS);
 	lcd_en();
 
 	// Second nibble
 	PORTC = (byte<<4);
-	PORTC |= (1<<RS);
+	PORTC |= (1<<LCD_RS);
 	lcd_en();
 }
 
@@ -101,9 +83,9 @@ void reset(void){
 }
 
 void lcd_en(void) {
-	PORTC |= (1<<EN);	// E high
+	PORTC |= (1<<LCD_EN);	// E high
 	_delay_ms(1);			// nodig
-	PORTC &= ~(1<<EN);  	// E low
+	PORTC &= ~(1<<LCD_EN);  	// E low
 	_delay_ms(1);
 }
 

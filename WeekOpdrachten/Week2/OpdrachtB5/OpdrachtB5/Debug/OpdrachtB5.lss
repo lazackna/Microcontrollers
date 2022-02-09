@@ -17,15 +17,15 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING
   6 .debug_abbrev 00000873  00000000  00000000  00000dff  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_line   0000044c  00000000  00000000  00001672  2**0
+  7 .debug_line   00000450  00000000  00000000  00001672  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_frame  000000b0  00000000  00000000  00001ac0  2**2
+  8 .debug_frame  000000b0  00000000  00000000  00001ac4  2**2
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_str    000004b8  00000000  00000000  00001b70  2**0
+  9 .debug_str    000004b7  00000000  00000000  00001b74  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_loc    00000226  00000000  00000000  00002028  2**0
+ 10 .debug_loc    00000226  00000000  00000000  0000202b  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_ranges 00000048  00000000  00000000  0000224e  2**0
+ 11 .debug_ranges 00000048  00000000  00000000  00002251  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -136,7 +136,7 @@ Disassembly of section .text:
 }
 
 void lcd_en(void) {
-	PORTC |= (1<<EN);	// E high
+	PORTC |= (1<<LCD_EN);	// E high
   b8:	85 b3       	in	r24, 0x15	; 21
   ba:	88 60       	ori	r24, 0x08	; 8
   bc:	85 bb       	out	0x15, r24	; 21
@@ -153,7 +153,7 @@ void lcd_en(void) {
   c6:	00 c0       	rjmp	.+0      	; 0xc8 <lcd_en+0x10>
   c8:	00 00       	nop
 	_delay_ms(1);			// nodig
-	PORTC &= ~(1<<EN);  	// E low
+	PORTC &= ~(1<<LCD_EN);  	// E low
   ca:	85 b3       	in	r24, 0x15	; 21
   cc:	87 7f       	andi	r24, 0xF7	; 247
   ce:	85 bb       	out	0x15, r24	; 21
@@ -177,7 +177,7 @@ void lcd_write_data(unsigned char byte) {
 	// First nibble.
 	PORTC = byte;
   e2:	85 bb       	out	0x15, r24	; 21
-	PORTC |= (1<<RS);
+	PORTC |= (1<<LCD_RS);
   e4:	85 b3       	in	r24, 0x15	; 21
   e6:	84 60       	ori	r24, 0x04	; 4
   e8:	85 bb       	out	0x15, r24	; 21
@@ -189,7 +189,7 @@ void lcd_write_data(unsigned char byte) {
   ec:	c2 95       	swap	r28
   ee:	c0 7f       	andi	r28, 0xF0	; 240
   f0:	c5 bb       	out	0x15, r28	; 21
-	PORTC |= (1<<RS);
+	PORTC |= (1<<LCD_RS);
   f2:	85 b3       	in	r24, 0x15	; 21
   f4:	84 60       	ori	r24, 0x04	; 4
 	lcd_en();
@@ -200,9 +200,9 @@ void lcd_write_data(unsigned char byte) {
   fc:	08 95       	ret
 
 000000fe <lcd_write_string>:
-		lcd_command((0x80 + position));
-	//}
-	
+
+void set_cursor(int position){
+	lcd_command((0x80 + position));
 }
 
 void lcd_write_string(const char *str) {
@@ -214,7 +214,7 @@ void lcd_write_string(const char *str) {
  104:	02 c0       	rjmp	.+4      	; 0x10a <lcd_write_string+0xc>
 		lcd_write_data(*str);
  106:	eb df       	rcall	.-42     	; 0xde <lcd_write_data>
-	
+	lcd_command((0x80 + position));
 }
 
 void lcd_write_string(const char *str) {
@@ -233,7 +233,7 @@ void lcd_write_string(const char *str) {
 
 00000116 <init_4bits_mode>:
 	PORTC = (byte<<4);
-	PORTC |= (1<<RS);
+	PORTC |= (1<<LCD_RS);
 	lcd_en();
 }
 
@@ -316,7 +316,7 @@ void reset(void){
  15a:	08 95       	ret
 
 0000015c <lcd_command>:
-	PORTC &= ~(1<<EN);  	// E low
+	PORTC &= ~(1<<LCD_EN);  	// E low
 	_delay_ms(1);
 }
 
@@ -362,19 +362,19 @@ void lcd_command ( unsigned char dat ){
  196:	08 95       	ret
 
 00000198 <set_cursor>:
-		//PORTC = 0x00;
-		//lcd_en();
-		//PORTC = 0x82; 
-		//lcd_en();
-		
-		lcd_command((0x80 + position));
+	set_cursor(4);
+	lcd_write_string("David");
+}
+
+void set_cursor(int position){
+	lcd_command((0x80 + position));
  198:	80 58       	subi	r24, 0x80	; 128
  19a:	e0 cf       	rjmp	.-64     	; 0x15c <lcd_command>
  19c:	08 95       	ret
 
 0000019e <main>:
-void reset(void);
-void set_cursor(int position);
+
+#include "lcd.h"
 
 int main(void)
 {
@@ -396,9 +396,6 @@ int main(void)
  1b0:	a6 df       	rcall	.-180    	; 0xfe <lcd_write_string>
  1b2:	80 e0       	ldi	r24, 0x00	; 0
  1b4:	90 e0       	ldi	r25, 0x00	; 0
-	
-
-	
 }
  1b6:	08 95       	ret
 
