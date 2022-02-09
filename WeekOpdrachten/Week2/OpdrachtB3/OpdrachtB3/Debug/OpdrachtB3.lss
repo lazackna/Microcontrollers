@@ -1,5 +1,5 @@
 
-Opdracht3.elf:     file format elf32-avr
+OpdrachtB3.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
@@ -11,23 +11,23 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY
   3 .debug_aranges 00000040  00000000  00000000  000002f3  2**0
                   CONTENTS, READONLY, DEBUGGING
-  4 .debug_info   00000c16  00000000  00000000  00000333  2**0
+  4 .debug_info   00000c18  00000000  00000000  00000333  2**0
                   CONTENTS, READONLY, DEBUGGING
-  5 .debug_abbrev 00000871  00000000  00000000  00000f49  2**0
+  5 .debug_abbrev 00000871  00000000  00000000  00000f4b  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_line   000002f5  00000000  00000000  000017ba  2**0
+  6 .debug_line   000002f5  00000000  00000000  000017bc  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_frame  000000f4  00000000  00000000  00001ab0  2**2
+  7 .debug_frame  000000f4  00000000  00000000  00001ab4  2**2
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_str    0000027d  00000000  00000000  00001ba4  2**0
+  8 .debug_str    0000027d  00000000  00000000  00001ba8  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_loc    00000249  00000000  00000000  00001e21  2**0
+  9 .debug_loc    00000249  00000000  00000000  00001e25  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_ranges 00000030  00000000  00000000  0000206a  2**0
+ 10 .debug_ranges 00000030  00000000  00000000  0000206e  2**0
                   CONTENTS, READONLY, DEBUGGING
  11 .text         00000004  0000022c  0000022c  000002c0  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
- 12 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  0000209c  2**2
+ 12 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  000020a0  2**2
                   CONTENTS, READONLY, DEBUGGING
  13 .text.wait    0000001e  00000200  00000200  00000294  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
@@ -145,7 +145,7 @@ Disassembly of section .text:
 Disassembly of section .text:
 
 0000022c <__bad_interrupt>:
- 22c:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+ 22c:	0c 94 00 00 	jmp	0	; 0x0 <__TEXT_REGION_ORIGIN__>
 
 Disassembly of section .text.wait:
 
@@ -240,9 +240,9 @@ ISR( INT1_vect )
  11e:	ef 93       	push	r30
  120:	ff 93       	push	r31
 	currentNumber++;
- 122:	80 91 00 01 	lds	r24, 0x0100	; 0x800100 <_edata>
+ 122:	80 91 00 01 	lds	r24, 0x0100	; 0x800100 <__DATA_REGION_ORIGIN__>
  126:	8f 5f       	subi	r24, 0xFF	; 255
- 128:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <_edata>
+ 128:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <__DATA_REGION_ORIGIN__>
 	
 	display(currentNumber);
  12c:	90 e0       	ldi	r25, 0x00	; 0
@@ -294,9 +294,9 @@ ISR( INT2_vect )
  17a:	ef 93       	push	r30
  17c:	ff 93       	push	r31
 	currentNumber--;
- 17e:	80 91 00 01 	lds	r24, 0x0100	; 0x800100 <_edata>
+ 17e:	80 91 00 01 	lds	r24, 0x0100	; 0x800100 <__DATA_REGION_ORIGIN__>
  182:	81 50       	subi	r24, 0x01	; 1
- 184:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <_edata>
+ 184:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <__DATA_REGION_ORIGIN__>
 	
 	display(currentNumber);
  188:	90 e0       	ldi	r25, 0x00	; 0

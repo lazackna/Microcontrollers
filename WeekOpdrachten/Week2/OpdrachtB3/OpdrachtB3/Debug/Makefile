@@ -58,9 +58,9 @@ main.d
 C_DEPS_AS_ARGS +=  \
 main.d
 
-OUTPUT_FILE_PATH +=Opdracht3.elf
+OUTPUT_FILE_PATH +=OpdrachtB3.elf
 
-OUTPUT_FILE_PATH_AS_ARGS +=Opdracht3.elf
+OUTPUT_FILE_PATH_AS_ARGS +=OpdrachtB3.elf
 
 ADDITIONAL_DEPENDENCIES:=
 
@@ -105,11 +105,11 @@ all: $(OUTPUT_FILE_PATH) $(ADDITIONAL_DEPENDENCIES)
 $(OUTPUT_FILE_PATH): $(OBJS) $(USER_OBJS) $(OUTPUT_FILE_DEP) $(LIB_DEP) $(LINKER_SCRIPT_DEP)
 	@echo Building target: $@
 	@echo Invoking:  XC8 C Linker : 2.31
-	$(QUOTE)C:\Program Files\Microchip\xc8\v2.31\bin\xc8-cc.exe$(QUOTE) -o$(OUTPUT_FILE_PATH_AS_ARGS) $(OBJS_AS_ARGS) $(USER_OBJS) $(LIBS) -mcpu=ATmega128  -mdfp="C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.6.364\xc8"  -Wl,-Map="Opdracht3.map" -funsigned-char -funsigned-bitfields -Wl,--start-group -Wl,-lm  -Wl,--end-group -Wl,--gc-sections -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums --memorysummary,memoryfile.xml  
+	$(QUOTE)C:\Program Files\Microchip\xc8\v2.31\bin\xc8-cc.exe$(QUOTE) -o$(OUTPUT_FILE_PATH_AS_ARGS) $(OBJS_AS_ARGS) $(USER_OBJS) $(LIBS) -mcpu=ATmega128  -mdfp="C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.6.364\xc8"  -Wl,-Map="OpdrachtB3.map" -funsigned-char -funsigned-bitfields -Wl,--start-group -Wl,-lm  -Wl,--end-group -Wl,--gc-sections -Og -ffunction-sections -fdata-sections -fpack-struct -fshort-enums --memorysummary,memoryfile.xml  
 	@echo Finished building target: $@
-	"C:\Program Files\Microchip\xc8\v2.31\bin\avr-objcopy.exe" -O ihex -R .eeprom -R .fuse -R .lock -R .signature -R .user_signatures  "Opdracht3.elf" "Opdracht3.hex"
-	"C:\Program Files\Microchip\xc8\v2.31\bin\avr-objcopy.exe" -j .eeprom --set-section-flags=.eeprom=alloc,load --change-section-lma .eeprom=0 --no-change-warnings -O ihex "Opdracht3.elf" "Opdracht3.eep" || exit 0
-	"C:\Program Files\Microchip\xc8\v2.31\bin\avr-objdump.exe" -h -S "Opdracht3.elf" > "Opdracht3.lss"
+	"C:\Program Files\Microchip\xc8\v2.31\bin\avr-objcopy.exe" -O ihex -R .eeprom -R .fuse -R .lock -R .signature -R .user_signatures  "OpdrachtB3.elf" "OpdrachtB3.hex"
+	"C:\Program Files\Microchip\xc8\v2.31\bin\avr-objcopy.exe" -j .eeprom --set-section-flags=.eeprom=alloc,load --change-section-lma .eeprom=0 --no-change-warnings -O ihex "OpdrachtB3.elf" "OpdrachtB3.eep" || exit 0
+	"C:\Program Files\Microchip\xc8\v2.31\bin\avr-objdump.exe" -h -S "OpdrachtB3.elf" > "OpdrachtB3.lss"
 	
 	
 
@@ -121,5 +121,5 @@ $(OUTPUT_FILE_PATH): $(OBJS) $(USER_OBJS) $(OUTPUT_FILE_DEP) $(LIB_DEP) $(LINKER
 clean:
 	-$(RM) $(OBJS_AS_ARGS) $(EXECUTABLES)  
 	-$(RM) $(C_DEPS_AS_ARGS)   
-	rm -rf "Opdracht3.elf" "Opdracht3.hex" "Opdracht3.eep" "Opdracht3.map" "Opdracht3.usersignatures" "Opdracht3.a"  "Opdracht3.lss"
+	rm -rf "OpdrachtB3.elf" "OpdrachtB3.hex" "OpdrachtB3.eep" "OpdrachtB3.map" "OpdrachtB3.usersignatures" "OpdrachtB3.a"  "OpdrachtB3.lss"
 	

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?> 
 <project>                                  
-  <executable name="Opdracht3.elf">                 
+  <executable name="OpdrachtB3.elf">                 
     <memory name="program">              
       <units>bytes</units>                 
       <length>131072</length>                 
