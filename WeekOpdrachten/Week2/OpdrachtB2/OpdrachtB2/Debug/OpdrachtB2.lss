@@ -1,5 +1,5 @@
 
-Opdracht2.elf:     file format elf32-avr
+OpdrachtB2.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
@@ -11,11 +11,11 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY
   3 .debug_aranges 00000038  00000000  00000000  000001db  2**0
                   CONTENTS, READONLY, DEBUGGING
-  4 .debug_info   00000b97  00000000  00000000  00000213  2**0
+  4 .debug_info   00000b99  00000000  00000000  00000213  2**0
                   CONTENTS, READONLY, DEBUGGING
-  5 .debug_abbrev 00000832  00000000  00000000  00000daa  2**0
+  5 .debug_abbrev 00000832  00000000  00000000  00000dac  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_line   000002f6  00000000  00000000  000015dc  2**0
+  6 .debug_line   000002f6  00000000  00000000  000015de  2**0
                   CONTENTS, READONLY, DEBUGGING
   7 .debug_frame  00000084  00000000  00000000  000018d4  2**2
                   CONTENTS, READONLY, DEBUGGING
@@ -114,7 +114,6 @@ ISR( INT1_vect ) {
   e8:	11 24       	eor	r1, r1
   ea:	8f 93       	push	r24
   ec:	9f 93       	push	r25
-	
 	char val = PINC; // Read the current values of PORTC.
   ee:	83 b3       	in	r24, 0x13	; 19
 	if(val == 0x1){	 // If value is 0x1 then reset the light to 0x80.
@@ -175,9 +174,7 @@ ISR( INT2_vect ) {
   ca:	99 1f       	adc	r25, r25
   cc:	82 2b       	or	r24, r18
   ce:	85 bb       	out	0x15, r24	; 21
-	}
-	
-	
+	}	
 }
   d0:	9f 91       	pop	r25
   d2:	8f 91       	pop	r24
@@ -225,32 +222,30 @@ Disassembly of section .text.main:
 
 int main(void)
 {
-	
-	//DDRD = 0xF0; //
-	DDRC = 0xFF;
+	DDRC = 0xFF; // Set all pins on DDRC to output.
  112:	8f ef       	ldi	r24, 0xFF	; 255
  114:	84 bb       	out	0x14, r24	; 20
 	
-	EICRA |= 0b00111100;
+	EICRA |= 0b00111100; // Set PIN1 and PIN2 to rising edge.
  116:	ea e6       	ldi	r30, 0x6A	; 106
  118:	f0 e0       	ldi	r31, 0x00	; 0
  11a:	80 81       	ld	r24, Z
  11c:	8c 63       	ori	r24, 0x3C	; 60
  11e:	80 83       	st	Z, r24
-	EIMSK |= 0b0110;
+	EIMSK |= 0b0110; // Enable PIN1 and PIN2.
  120:	89 b7       	in	r24, 0x39	; 57
  122:	86 60       	ori	r24, 0x06	; 6
  124:	89 bf       	out	0x39, r24	; 57
 	
-	sei();
+	sei(); // Enable global interrupt system
  126:	78 94       	sei
-	PORTC = 0b1;
+	PORTC = 0b1; // Set pin 1 to high to have a starting bit.
  128:	81 e0       	ldi	r24, 0x01	; 1
  12a:	85 bb       	out	0x15, r24	; 21
 	
     while(1)
     {
-        wait(500);
+        wait(500); // Wait here. The main does nothing.
  12c:	84 ef       	ldi	r24, 0xF4	; 244
  12e:	91 e0       	ldi	r25, 0x01	; 1
  130:	0e 94 9b 00 	call	0x136	; 0x136 <wait>
