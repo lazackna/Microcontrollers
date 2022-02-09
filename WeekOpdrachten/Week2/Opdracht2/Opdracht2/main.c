@@ -11,7 +11,6 @@
 #include <avr/interrupt.h>
 
 ISR( INT1_vect ) {
-	
 	char val = PINC; // Read the current values of PORTC.
 	if(val == 0x1){	 // If value is 0x1 then reset the light to 0x80.
 		PORTC = 0x80;
@@ -28,9 +27,7 @@ ISR( INT2_vect ) {
 	}else{
 		PORTC = 0x0; // Set the port to 0.
 		PORTC |= (val << 0x1); // Bit shift the current value one to the left and or it with the current values of PORTC.
-	}
-	
-	
+	}	
 }
 
 void wait( int ms ) {
@@ -41,19 +38,17 @@ void wait( int ms ) {
 
 int main(void)
 {
+	DDRC = 0xFF; // Set all pins on DDRC to output.
 	
-	//DDRD = 0xF0; //
-	DDRC = 0xFF;
+	EICRA |= 0b00111100; // Set PIN1 and PIN2 to rising edge.
+	EIMSK |= 0b0110; // Enable PIN1 and PIN2.
 	
-	EICRA |= 0b00111100;
-	EIMSK |= 0b0110;
-	
-	sei();
-	PORTC = 0b1;
+	sei(); // Enable global interrupt system
+	PORTC = 0b1; // Set pin 1 to high to have a starting bit.
 	
     while(1)
     {
-        wait(500);
+        wait(500); // Wait here. The main does nothing.
     }
 	
 	return 1;

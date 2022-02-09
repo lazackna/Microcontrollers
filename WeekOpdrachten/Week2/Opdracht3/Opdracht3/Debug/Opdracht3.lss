@@ -1,0 +1,372 @@
+
+Opdracht3.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .data         00000000  00800100  00800100  000002c4  2**0
+                  ALLOC, LOAD, DATA
+  1 .text         000000ea  00000000  00000000  00000094  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  2 .comment      0000002f  00000000  00000000  000002c4  2**0
+                  CONTENTS, READONLY
+  3 .debug_aranges 00000040  00000000  00000000  000002f3  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  4 .debug_info   00000c16  00000000  00000000  00000333  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_abbrev 00000871  00000000  00000000  00000f49  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_line   000002f5  00000000  00000000  000017ba  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_frame  000000f4  00000000  00000000  00001ab0  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_str    0000027d  00000000  00000000  00001ba4  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_loc    00000249  00000000  00000000  00001e21  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_ranges 00000030  00000000  00000000  0000206a  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .text         00000004  0000022c  0000022c  000002c0  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 12 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  0000209c  2**2
+                  CONTENTS, READONLY, DEBUGGING
+ 13 .text.wait    0000001e  00000200  00000200  00000294  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 14 .text.display 00000024  000001dc  000001dc  00000270  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 15 .text.__vector_2 0000005c  000000fc  000000fc  00000190  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 16 .text.__vector_3 0000005c  00000158  00000158  000001ec  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 17 .text.main    00000028  000001b4  000001b4  00000248  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+ 18 .progmemx.data.Numbers 00000011  000000ea  000000ea  0000017e  2**0
+                  CONTENTS, ALLOC, LOAD, READONLY, PROGMEMX
+ 19 .bss.currentNumber 00000001  00800100  00800100  000002c4  2**0
+                  ALLOC
+ 20 .text.libgcc  0000000e  0000021e  0000021e  000002b2  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 49 00 	jmp	0x92	; 0x92 <__ctors_end>
+   4:	0c 94 16 01 	jmp	0x22c	; 0x22c <__bad_interrupt>
+   8:	0c 94 7e 00 	jmp	0xfc	; 0xfc <__vector_2>
+   c:	0c 94 ac 00 	jmp	0x158	; 0x158 <__vector_3>
+  10:	0c 94 16 01 	jmp	0x22c	; 0x22c <__bad_interrupt>
+  14:	0c 94 16 01 	jmp	0x22c	; 0x22c <__bad_interrupt>
+  18:	0c 94 16 01 	jmp	0x22c	; 0x22c <__bad_interrupt>
+  1c:	0c 94 16 01 	jmp	0x22c	; 0x22c <__bad_interrupt>
+  20:	0c 94 16 01 	jmp	0x22c	; 0x22c <__bad_interrupt>
+  24:	0c 94 16 01 	jmp	0x22c	; 0x22c <__bad_interrupt>
+  28:	0c 94 16 01 	jmp	0x22c	; 0x22c <__bad_interrupt>
+  2c:	0c 94 16 01 	jmp	0x22c	; 0x22c <__bad_interrupt>
+  30:	0c 94 16 01 	jmp	0x22c	; 0x22c <__bad_interrupt>
+  34:	0c 94 16 01 	jmp	0x22c	; 0x22c <__bad_interrupt>
+  38:	0c 94 16 01 	jmp	0x22c	; 0x22c <__bad_interrupt>
+  3c:	0c 94 16 01 	jmp	0x22c	; 0x22c <__bad_interrupt>
+  40:	0c 94 16 01 	jmp	0x22c	; 0x22c <__bad_interrupt>
+  44:	0c 94 16 01 	jmp	0x22c	; 0x22c <__bad_interrupt>
+  48:	0c 94 16 01 	jmp	0x22c	; 0x22c <__bad_interrupt>
+  4c:	0c 94 16 01 	jmp	0x22c	; 0x22c <__bad_interrupt>
+  50:	0c 94 16 01 	jmp	0x22c	; 0x22c <__bad_interrupt>
+  54:	0c 94 16 01 	jmp	0x22c	; 0x22c <__bad_interrupt>
+  58:	0c 94 16 01 	jmp	0x22c	; 0x22c <__bad_interrupt>
+  5c:	0c 94 16 01 	jmp	0x22c	; 0x22c <__bad_interrupt>
+  60:	0c 94 16 01 	jmp	0x22c	; 0x22c <__bad_interrupt>
+  64:	0c 94 16 01 	jmp	0x22c	; 0x22c <__bad_interrupt>
+  68:	0c 94 16 01 	jmp	0x22c	; 0x22c <__bad_interrupt>
+  6c:	0c 94 16 01 	jmp	0x22c	; 0x22c <__bad_interrupt>
+  70:	0c 94 16 01 	jmp	0x22c	; 0x22c <__bad_interrupt>
+  74:	0c 94 16 01 	jmp	0x22c	; 0x22c <__bad_interrupt>
+  78:	0c 94 16 01 	jmp	0x22c	; 0x22c <__bad_interrupt>
+  7c:	0c 94 16 01 	jmp	0x22c	; 0x22c <__bad_interrupt>
+  80:	0c 94 16 01 	jmp	0x22c	; 0x22c <__bad_interrupt>
+  84:	0c 94 16 01 	jmp	0x22c	; 0x22c <__bad_interrupt>
+  88:	0c 94 16 01 	jmp	0x22c	; 0x22c <__bad_interrupt>
+
+0000008c <.dinit>:
+  8c:	01 00       	.word	0x0001	; ????
+  8e:	01 01       	movw	r0, r2
+  90:	80 00       	.word	0x0080	; ????
+
+00000092 <__ctors_end>:
+  92:	11 24       	eor	r1, r1
+  94:	1f be       	out	0x3f, r1	; 63
+  96:	cf ef       	ldi	r28, 0xFF	; 255
+  98:	d0 e1       	ldi	r29, 0x10	; 16
+  9a:	de bf       	out	0x3e, r29	; 62
+  9c:	cd bf       	out	0x3d, r28	; 61
+
+0000009e <__do_copy_data>:
+  9e:	ec e8       	ldi	r30, 0x8C	; 140
+  a0:	f0 e0       	ldi	r31, 0x00	; 0
+  a2:	40 e0       	ldi	r20, 0x00	; 0
+  a4:	19 c0       	rjmp	.+50     	; 0xd8 <__do_clear_bss+0x8>
+  a6:	b7 91       	elpm	r27, Z+
+  a8:	a7 91       	elpm	r26, Z+
+  aa:	37 91       	elpm	r19, Z+
+  ac:	27 91       	elpm	r18, Z+
+  ae:	07 91       	elpm	r16, Z+
+  b0:	07 fd       	sbrc	r16, 7
+  b2:	0e c0       	rjmp	.+28     	; 0xd0 <__do_clear_bss>
+  b4:	97 91       	elpm	r25, Z+
+  b6:	87 91       	elpm	r24, Z+
+  b8:	ef 01       	movw	r28, r30
+  ba:	f9 2f       	mov	r31, r25
+  bc:	e8 2f       	mov	r30, r24
+  be:	0b bf       	out	0x3b, r16	; 59
+  c0:	07 90       	elpm	r0, Z+
+  c2:	0d 92       	st	X+, r0
+  c4:	a2 17       	cp	r26, r18
+  c6:	b3 07       	cpc	r27, r19
+  c8:	d9 f7       	brne	.-10     	; 0xc0 <__do_copy_data+0x22>
+  ca:	fe 01       	movw	r30, r28
+  cc:	1b be       	out	0x3b, r1	; 59
+  ce:	04 c0       	rjmp	.+8      	; 0xd8 <__do_clear_bss+0x8>
+
+000000d0 <__do_clear_bss>:
+  d0:	1d 92       	st	X+, r1
+  d2:	a2 17       	cp	r26, r18
+  d4:	b3 07       	cpc	r27, r19
+  d6:	e1 f7       	brne	.-8      	; 0xd0 <__do_clear_bss>
+  d8:	e1 39       	cpi	r30, 0x91	; 145
+  da:	f4 07       	cpc	r31, r20
+  dc:	21 f7       	brne	.-56     	; 0xa6 <__do_copy_data+0x8>
+  de:	0e 94 da 00 	call	0x1b4	; 0x1b4 <main>
+  e2:	0c 94 73 00 	jmp	0xe6	; 0xe6 <_exit>
+
+000000e6 <_exit>:
+  e6:	f8 94       	cli
+
+000000e8 <__stop_program>:
+  e8:	ff cf       	rjmp	.-2      	; 0xe8 <__stop_program>
+
+Disassembly of section .text:
+
+0000022c <__bad_interrupt>:
+ 22c:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+Disassembly of section .text.wait:
+
+00000200 <wait>:
+	display(currentNumber);
+}
+
+void wait( int ms ) 
+{
+	for (int i=0; i<ms; i++) {
+ 200:	20 e0       	ldi	r18, 0x00	; 0
+ 202:	30 e0       	ldi	r19, 0x00	; 0
+ 204:	08 c0       	rjmp	.+16     	; 0x216 <wait+0x16>
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 206:	ef ec       	ldi	r30, 0xCF	; 207
+ 208:	f7 e0       	ldi	r31, 0x07	; 7
+ 20a:	31 97       	sbiw	r30, 0x01	; 1
+ 20c:	f1 f7       	brne	.-4      	; 0x20a <wait+0xa>
+ 20e:	00 c0       	rjmp	.+0      	; 0x210 <wait+0x10>
+ 210:	00 00       	nop
+ 212:	2f 5f       	subi	r18, 0xFF	; 255
+ 214:	3f 4f       	sbci	r19, 0xFF	; 255
+ 216:	28 17       	cp	r18, r24
+ 218:	39 07       	cpc	r19, r25
+ 21a:	ac f3       	brlt	.-22     	; 0x206 <wait+0x6>
+		_delay_ms( 1 );		// library function (max 30 ms at 8MHz)
+	}
+}
+ 21c:	08 95       	ret
+
+Disassembly of section .text.display:
+
+000001dc <display>:
+	0b11111001	// Error
+};
+
+void display(int digit) 
+{
+	if (digit < 15 && digit >= 0)
+ 1dc:	8f 30       	cpi	r24, 0x0F	; 15
+ 1de:	91 05       	cpc	r25, r1
+ 1e0:	60 f4       	brcc	.+24     	; 0x1fa <display+0x1e>
+		PORTA = Numbers[digit];
+ 1e2:	09 2e       	mov	r0, r25
+ 1e4:	00 0c       	add	r0, r0
+ 1e6:	aa 0b       	sbc	r26, r26
+ 1e8:	86 51       	subi	r24, 0x16	; 22
+ 1ea:	9f 4f       	sbci	r25, 0xFF	; 255
+ 1ec:	af 4f       	sbci	r26, 0xFF	; 255
+ 1ee:	fc 01       	movw	r30, r24
+ 1f0:	5a 2f       	mov	r21, r26
+ 1f2:	0e 94 0f 01 	call	0x21e	; 0x21e <__xload_1>
+ 1f6:	6b bb       	out	0x1b, r22	; 27
+ 1f8:	08 95       	ret
+	else
+		PORTA = Numbers[16];
+ 1fa:	89 ef       	ldi	r24, 0xF9	; 249
+ 1fc:	8b bb       	out	0x1b, r24	; 27
+ 1fe:	08 95       	ret
+
+Disassembly of section .text.__vector_2:
+
+000000fc <__vector_2>:
+
+char currentNumber = 0;
+
+
+ISR( INT1_vect ) 
+{
+  fc:	1f 92       	push	r1
+  fe:	0f 92       	push	r0
+ 100:	0f b6       	in	r0, 0x3f	; 63
+ 102:	0f 92       	push	r0
+ 104:	11 24       	eor	r1, r1
+ 106:	0b b6       	in	r0, 0x3b	; 59
+ 108:	0f 92       	push	r0
+ 10a:	2f 93       	push	r18
+ 10c:	3f 93       	push	r19
+ 10e:	4f 93       	push	r20
+ 110:	5f 93       	push	r21
+ 112:	6f 93       	push	r22
+ 114:	7f 93       	push	r23
+ 116:	8f 93       	push	r24
+ 118:	9f 93       	push	r25
+ 11a:	af 93       	push	r26
+ 11c:	bf 93       	push	r27
+ 11e:	ef 93       	push	r30
+ 120:	ff 93       	push	r31
+	currentNumber++;
+ 122:	80 91 00 01 	lds	r24, 0x0100	; 0x800100 <_edata>
+ 126:	8f 5f       	subi	r24, 0xFF	; 255
+ 128:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <_edata>
+	
+	display(currentNumber);
+ 12c:	90 e0       	ldi	r25, 0x00	; 0
+ 12e:	0e 94 ee 00 	call	0x1dc	; 0x1dc <display>
+}
+ 132:	ff 91       	pop	r31
+ 134:	ef 91       	pop	r30
+ 136:	bf 91       	pop	r27
+ 138:	af 91       	pop	r26
+ 13a:	9f 91       	pop	r25
+ 13c:	8f 91       	pop	r24
+ 13e:	7f 91       	pop	r23
+ 140:	6f 91       	pop	r22
+ 142:	5f 91       	pop	r21
+ 144:	4f 91       	pop	r20
+ 146:	3f 91       	pop	r19
+ 148:	2f 91       	pop	r18
+ 14a:	0f 90       	pop	r0
+ 14c:	0b be       	out	0x3b, r0	; 59
+ 14e:	0f 90       	pop	r0
+ 150:	0f be       	out	0x3f, r0	; 63
+ 152:	0f 90       	pop	r0
+ 154:	1f 90       	pop	r1
+ 156:	18 95       	reti
+
+Disassembly of section .text.__vector_3:
+
+00000158 <__vector_3>:
+
+ISR( INT2_vect ) 
+{
+ 158:	1f 92       	push	r1
+ 15a:	0f 92       	push	r0
+ 15c:	0f b6       	in	r0, 0x3f	; 63
+ 15e:	0f 92       	push	r0
+ 160:	11 24       	eor	r1, r1
+ 162:	0b b6       	in	r0, 0x3b	; 59
+ 164:	0f 92       	push	r0
+ 166:	2f 93       	push	r18
+ 168:	3f 93       	push	r19
+ 16a:	4f 93       	push	r20
+ 16c:	5f 93       	push	r21
+ 16e:	6f 93       	push	r22
+ 170:	7f 93       	push	r23
+ 172:	8f 93       	push	r24
+ 174:	9f 93       	push	r25
+ 176:	af 93       	push	r26
+ 178:	bf 93       	push	r27
+ 17a:	ef 93       	push	r30
+ 17c:	ff 93       	push	r31
+	currentNumber--;
+ 17e:	80 91 00 01 	lds	r24, 0x0100	; 0x800100 <_edata>
+ 182:	81 50       	subi	r24, 0x01	; 1
+ 184:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <_edata>
+	
+	display(currentNumber);
+ 188:	90 e0       	ldi	r25, 0x00	; 0
+ 18a:	0e 94 ee 00 	call	0x1dc	; 0x1dc <display>
+}
+ 18e:	ff 91       	pop	r31
+ 190:	ef 91       	pop	r30
+ 192:	bf 91       	pop	r27
+ 194:	af 91       	pop	r26
+ 196:	9f 91       	pop	r25
+ 198:	8f 91       	pop	r24
+ 19a:	7f 91       	pop	r23
+ 19c:	6f 91       	pop	r22
+ 19e:	5f 91       	pop	r21
+ 1a0:	4f 91       	pop	r20
+ 1a2:	3f 91       	pop	r19
+ 1a4:	2f 91       	pop	r18
+ 1a6:	0f 90       	pop	r0
+ 1a8:	0b be       	out	0x3b, r0	; 59
+ 1aa:	0f 90       	pop	r0
+ 1ac:	0f be       	out	0x3f, r0	; 63
+ 1ae:	0f 90       	pop	r0
+ 1b0:	1f 90       	pop	r1
+ 1b2:	18 95       	reti
+
+Disassembly of section .text.main:
+
+000001b4 <main>:
+		PORTA = Numbers[16];
+}
+
+int main(void)
+{
+	DDRA = 0xFF; // Set all pins on DDRC to output.
+ 1b4:	8f ef       	ldi	r24, 0xFF	; 255
+ 1b6:	8a bb       	out	0x1a, r24	; 26
+	
+	EICRA |= 0b00111100; // Set PIN1 and PIN2 to rising edge.
+ 1b8:	ea e6       	ldi	r30, 0x6A	; 106
+ 1ba:	f0 e0       	ldi	r31, 0x00	; 0
+ 1bc:	80 81       	ld	r24, Z
+ 1be:	8c 63       	ori	r24, 0x3C	; 60
+ 1c0:	80 83       	st	Z, r24
+	EIMSK |= 0b0110; // Enable PIN1 and PIN2.
+ 1c2:	89 b7       	in	r24, 0x39	; 57
+ 1c4:	86 60       	ori	r24, 0x06	; 6
+ 1c6:	89 bf       	out	0x39, r24	; 57
+	
+	sei(); // Enable global interrupt system
+ 1c8:	78 94       	sei
+	display(0);
+ 1ca:	80 e0       	ldi	r24, 0x00	; 0
+ 1cc:	90 e0       	ldi	r25, 0x00	; 0
+ 1ce:	0e 94 ee 00 	call	0x1dc	; 0x1dc <display>
+	
+	while(1)
+	{
+		wait(500); // Wait here. The main does nothing.
+ 1d2:	84 ef       	ldi	r24, 0xF4	; 244
+ 1d4:	91 e0       	ldi	r25, 0x01	; 1
+ 1d6:	0e 94 00 01 	call	0x200	; 0x200 <wait>
+ 1da:	fb cf       	rjmp	.-10     	; 0x1d2 <main+0x1e>
+
+Disassembly of section .text.libgcc:
+
+0000021e <__xload_1>:
+ 21e:	57 fd       	sbrc	r21, 7
+ 220:	03 c0       	rjmp	.+6      	; 0x228 <__xload_1+0xa>
+ 222:	5b bf       	out	0x3b, r21	; 59
+ 224:	67 91       	elpm	r22, Z+
+ 226:	08 95       	ret
+ 228:	60 81       	ld	r22, Z
+ 22a:	08 95       	ret
