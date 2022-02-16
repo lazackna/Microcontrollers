@@ -7,16 +7,6 @@
 
 #include "lcd.h"
 
-//int main(void)
-//{
-	//DDRD = 0xFF;
-    //init_4bits_mode();
-	////char *str = "roof";
-	//reset();
-	//set_cursor(4);
-	//lcd_write_string("David");
-//}
-
 void set_cursor(int position){
 	lcd_command((0x80 + position));
 }
