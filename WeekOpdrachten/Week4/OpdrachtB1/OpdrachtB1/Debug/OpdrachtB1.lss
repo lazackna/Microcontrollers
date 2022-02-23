@@ -154,8 +154,8 @@ void wait( int ms )
 // Initialize ADC: 10-bits (left justified), free running
 void adcInit( void )
 {
-	ADMUX = 0b01100001;			// AREF=VCC, result left adjusted, channel1 at pin PF1
-  bc:	81 e6       	ldi	r24, 0x61	; 97
+	ADMUX = 0b01100011;			// AREF=VCC, result left adjusted, channel1 at pin PF1
+  bc:	83 e6       	ldi	r24, 0x63	; 99
   be:	87 b9       	out	0x07, r24	; 7
 	ADCSRA = 0b11100110;		// ADC-enable, no interrupt, start, free running, division by 64
   c0:	86 ee       	ldi	r24, 0xE6	; 230
