@@ -4,3 +4,5 @@
 
 lcd.c
 
+lcdTest.c
+
