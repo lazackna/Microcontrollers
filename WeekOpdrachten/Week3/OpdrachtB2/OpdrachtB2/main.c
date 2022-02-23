@@ -29,6 +29,7 @@ void timer2Init(void) {
 	TIMSK |= BIT(7);
 	sei();
 	TCCR2 = 0b00001101;
+
 }
 
 ISR (TIMER2_COMP_vect ) {
