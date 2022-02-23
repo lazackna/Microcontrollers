@@ -44,7 +44,7 @@ int main( void )
 		char i = ADCH;
 		sprintf(str, "%d", i);
 		lcd_write_string(str);
-		wait(500);				// every 100 ms (busy waiting)
+		wait(500);				// every 1000 ms (busy waiting)
 	}
 	free(str);
 }
