@@ -124,11 +124,30 @@ void displayOff()
   	spi_slaveDeSelect(0);			// Deselect display chip
 }
 
+// Write a word = address byte + data byte from master to slave
 void spi_writeWord(unsigned char adress, unsigned char data) {
 	spi_slaveSelect(0);
 	spi_write(adress);
 	spi_write(data);
 	spi_slaveDeSelect(0);
+}
+
+void writeLedDisplay(int value) {
+	if(value < 0) {
+		value = -value;
+		
+		for(int i = 1; i <= 3; i++) {
+			spi_writeWord(i, value % 10);
+			value /= 10;
+		}
+		spi_writeWord(4, 10);
+	} else {
+	
+		for(int i = 1; i <= 4; i++) {
+			spi_writeWord(i, value % 10);
+			value /= 10;
+		}
+	}
 }
 
 int main()
@@ -148,19 +167,22 @@ int main()
 	}    
 	wait(1000);
 
-	// write 4-digit data  
- 	for (char i =1; i<=4; i++)
-  	{
-		//spi_slaveSelect(0);         // Select display chip
-		//spi_write(i);         		// 	digit adress: (digit place)
-		//spi_write(i);  		// 	digit value: i (= digit place)
-		//spi_slaveDeSelect(0); 		// Deselect display chip
-		spi_writeWord(i, i);
-		wait(1000);
-  	}
-	wait(1000);
-
-
+	//// write 4-digit data  
+ 	//for (char i =1; i<=4; i++)
+  	//{
+		////spi_slaveSelect(0);         // Select display chip
+		////spi_write(i);         		// 	digit adress: (digit place)
+		////spi_write(i);  		// 	digit value: i (= digit place)
+		////spi_slaveDeSelect(0); 		// Deselect display chip
+		//spi_writeWord(i, i);
+		//wait(1000);
+  	//}
+	//wait(1000);
+	//for(int i = 0; i > -999; i--) {
+		//writeLedDisplay(i);
+		//wait(100);
+	//}
+	writeLedDisplay(16);
 
   	return (1);
 }
