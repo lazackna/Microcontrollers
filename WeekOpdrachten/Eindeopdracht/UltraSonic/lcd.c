@@ -12,7 +12,8 @@ void set_cursor(int position){
 }
 
 void lcd_write_string(const char *str) {
-
+	reset();
+	set_cursor(0);
 	for(;*str; str++){
 		lcd_write_data(*str);
 	}
