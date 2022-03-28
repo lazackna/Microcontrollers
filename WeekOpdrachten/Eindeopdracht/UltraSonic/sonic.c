@@ -90,46 +90,16 @@
 
 #define BIT(x)	(1 << (x))
 
-#define  Trigger_pin	PA0	/* Trigger pin 
+#define  Trigger_pin	PA0
 
 int TimerOverflow = 0;
 
 ISR(TIMER1_OVF_vect)
 {
-	TimerOverflow++;	/* Increment Timer Overflow count */
-//}
-bool isReading = false;
-unsigned long long count = 0;
-unsigned long long fullCount = 0;
+	TimerOverflow++;
+}
+
 char * text;
-ISR ( INT6_vect ) {
-	TCCR2 |= 0b010;
-	PORTB = 2;
-}
-
-
-ISR ( INT7_vect ) {
-	PORTB = 0;
-	TCCR2 &= 0b11111000;
-	TCNT2 = -1;
-	fullCount = count;
-	count = 0;
-	isReading = false;
-	sprintf(text, "Distance: %d", fullCount);
-	reset();
-	lcd_write_string(text);
-	fullCount = 0;
-}
-
-ISR ( TIMER2_COMP_vect ) {
-	count++;
-	//TCNT2 = -8;
-}
-
-ISR ( TIMER2_OVF_vect ) {
-	count++;
-	TCNT2 = -1;
-}
 
 void wait( int ms ) {
 	for (int i=0; i<ms; i++) {
@@ -137,56 +107,59 @@ void wait( int ms ) {
 	}
 }
 
-void timer2Init(void) {
-	TCNT2 = -1;
-	TIMSK |= 0b01000000;
-	sei();
-	TCCR2 = 0b1000;
-}
 char test = 0;
 int main(void)
 {
-	text = malloc(sizeof(char) * 255);
-	DDRA = 0b01;
+	char string[10];
+	long count;
+	double distance;
+	DDRA = 0x01;
+	PORTD = 0xFF;
 	DDRB = 0xFF;
+	// We use timer 1.
+	// To read high we set TCCR1B to rising edge.
+	// Clear the Input Capture Flag (ICP).
+	// This says if an interupt happened.
+	init_4bits_mode();
+	sei();
+	TIMSK = (1 << TOIE1); // enable the timer1 overflow interrupt. 
+	TCCR1A = 0;
+	PORTB = 0;
+	PORTA |= (1 << Trigger_pin);
+	wait(1);
+	PORTA &= (~(1 << Trigger_pin));
 	
-	//EICRB |= 0b10110000; // set PE 6 and 7 to rising and falling respectively
-	//EIMSK |= 0b11000000; // enable pins 6 and 7.
-	//timer2Init();
-	//sei();
-	//init_4bits_mode();
-	//reset();
-	//set_cursor(0);
-	//lcd_write_string("hello");
-	//PORTA = 0xff;
-	while(1)
-	{
-		PORTA = 0b1;
-		//wait(1);
-		_delay_us(10);
-		PORTA = 0;
-		//isReading = true;
-		//wait(1000);
-		
-		//while(!(PINA & BIT(1)));
-		//break;
-		//// The pin went high, start the timer.
-		//TCCR2 |= 0b010;
-		//TCNT2 = -1;
-		////printf("test");
-		//while(PINA & BIT(1));
-		//// The pin went low, stop the timer.
-		//TCCR2 &= 0b11111000;
-		//unsigned long test = count;
-		//count = 0;
-		//sprintf(text, "%lu", test);
-		////lcd_write_string(text);
-		//fullCount = 0;
-		//wait(1000);
-		//fullCount = 0;
-	}
-	while(1) {
-	PORTA = 0xff;
-	wait(1000);
-	}
+	while ((TIFR & (1 << ICF1)) == 0);
+	
+	PORTC = 0xFF;
+	//while(1)
+	//{
+		//PORTA |= (1 << Trigger_pin);
+		//_delay_us(10);
+		//PORTA &= (~(1 << Trigger_pin));
+		//
+		//TCNT1 = 0;
+		//TCCR1B = 0x41;
+		//TIFR = 1<<ICF1;
+		//TIFR = 1<<TOV1;
+	//
+		//while ((TIFR & (1 << ICF1)) == 0); // Wait for rising edge.
+		//TCNT1 = 0;	/* Clear Timer counter */
+		//TCCR1B = 0x01;	/* Capture on falling edge, No prescaler */
+		//TIFR = 1<<ICF1;	/* Clear ICP flag (Input Capture flag) */
+		//TIFR = 1<<TOV1;	/* Clear Timer Overflow flag */
+		//TimerOverflow = 0;/* Clear Timer overflow count */
+//
+		//while ((TIFR & (1 << ICF1)) == 0);/* Wait for falling edge */
+		//count = ICR1 + (65535 * TimerOverflow);	/* Take count */
+		///* 8MHz Timer freq, sound speed =343 m/s */
+		//distance = (double)count / 466.47;
+		//dtostrf(distance, 2, 2, text);
+		//strcat(text, " cm    ");
+		//reset();
+		//lcd_write_string("Dest");
+		//
+		//wait(200);
+	//}
+	
 }
