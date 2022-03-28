@@ -41,6 +41,7 @@ ISR (TIMER2_COMP_vect ) {
 			//msCount = 0;
 			TCNT2 = -off;
 			isOn = 0;
+		
 		//}
 	} else {
 		//if (msCount == 25)
@@ -56,7 +57,7 @@ ISR (TIMER2_COMP_vect ) {
 
 int main(void)
 {
-	on = 117; //7.8125 * 15;
+	on = 117; //7.8125 * 51;
 	off = 195; //7.8125 * 25;
 
 	DDRD = 0xFF;

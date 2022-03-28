@@ -93,7 +93,7 @@
 #define  Trigger_pin	0	/* Trigger pin */
 long int TimerOverflow = 0;
 
-unsigned long cm = 0;
+double cm = 0;
 
 char * text;
 ISR ( INT6_vect ) {
@@ -102,18 +102,27 @@ ISR ( INT6_vect ) {
 	TCCR2 |= 0b001; // Start the timer with no prescaler.
 }
 
-
 ISR ( INT7_vect ) {
 	TCCR2 &= 0b11111000;	// Stop the timer.
 	long long int value = TCNT2 + (255 * TimerOverflow); // don't forget to add the current value in the timer.
 	TCNT2 = 0;	// Clear the timer register.
 	TimerOverflow = 0;
-	cm = value;
+	cm = (double)value / 466.47;
 }
 
 ISR ( TIMER2_OVF_vect ) {
 	TimerOverflow+= 1;
 	TCNT2 = 0;
+}
+char isOn = 0;
+ISR ( TIMER0_COMP_vect ) {
+	if(isOn) {
+		PORTB = 1;
+		isOn = 0;
+	} else {
+		PORTB = 0;
+		isOn = 1;
+	}
 }
 
 void wait( int ms ) {
@@ -124,56 +133,45 @@ void wait( int ms ) {
 
 void timer2Init(void) {
 	TIMSK |= 0b01000000; // Enable overflow interupt.
-	sei();
+
 	TCCR2 = 0b0000;
 }
+
+void timer0Init(void){
+	TCCR0 = 0b01001100; // Turn on fast PWM. Prescaler on 256.
+	TIMSK |= BIT(1); // Set timer/counter 0 to compare match interupt. 31,250
+	//TCNT0 = -31.250 * 15;
+	DDRB = 0xFF;
+}
+
 char test = 0;
 int main(void)
 {
 	text = malloc(sizeof(char) * 255);
+	double distance = 0;
 	DDRA = 0b01;
-	DDRB = 0xFF;
+	
+	wait(10);
 	
 	EICRB |= 0b10110000; // set PE 6 and 7 to rising and falling respectively
 	EIMSK |= 0b11000000; // enable pins 6 and 7.
 	timer2Init();
-	//sei();
-	init_4bits_mode();
-	reset();
-	set_cursor(0);
-	//lcd_write_string("hello");
-	//PORTA = 0xff;
-		
+	timer0Init();
+	
+	sei();
+	
+	wait(200);	
 	while(1)
 	{
 		PORTA = 0b1;
-		//wait(1);
 		_delay_us(10);
 		PORTA = 0;
 		
-		reset();
-		sprintf(text, "%lu", cm);
-		lcd_write_string(text);
-		wait(1000);
-		//isReading = true;
-		//wait(1000);
-		
-		//while(!(PINA & BIT(1)));
-		//break;
-		//// The pin went high, start the timer.
-		//TCCR2 |= 0b010;
-		//TCNT2 = -1;
-		////printf("test");
-		//while(PINA & BIT(1));
-		//// The pin went low, stop the timer.
-		//TCCR2 &= 0b11111000;
-		//unsigned long test = count;
-		//count = 0;
-		//sprintf(text, "%lu", test);
-		////lcd_write_string(text);
-		//fullCount = 0;
-		//wait(1000);
-		//fullCount = 0;
+		for(int i = 0; i < 30; i++) {
+			TCNT0 = -31.250 * i;
+			wait(500);
+		}
+	
 	}
 	
 }
