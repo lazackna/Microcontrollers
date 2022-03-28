@@ -90,45 +90,30 @@
 
 #define BIT(x)	(1 << (x))
 
-#define  Trigger_pin	PA0	/* Trigger pin 
+#define  Trigger_pin	0	/* Trigger pin */
+long int TimerOverflow = 0;
 
-int TimerOverflow = 0;
+unsigned long cm = 0;
 
-ISR(TIMER1_OVF_vect)
-{
-	TimerOverflow++;	/* Increment Timer Overflow count */
-//}
-bool isReading = false;
-unsigned long long count = 0;
-unsigned long long fullCount = 0;
 char * text;
 ISR ( INT6_vect ) {
-	TCCR2 |= 0b010;
-	PORTB = 2;
+	TCNT2 = 0;	// Clear the timer register.
+	TimerOverflow = 0;
+	TCCR2 |= 0b001; // Start the timer with no prescaler.
 }
 
 
 ISR ( INT7_vect ) {
-	PORTB = 0;
-	TCCR2 &= 0b11111000;
-	TCNT2 = -1;
-	fullCount = count;
-	count = 0;
-	isReading = false;
-	sprintf(text, "Distance: %d", fullCount);
-	reset();
-	lcd_write_string(text);
-	fullCount = 0;
-}
-
-ISR ( TIMER2_COMP_vect ) {
-	count++;
-	//TCNT2 = -8;
+	TCCR2 &= 0b11111000;	// Stop the timer.
+	long long int value = TCNT2 + (255 * TimerOverflow); // don't forget to add the current value in the timer.
+	TCNT2 = 0;	// Clear the timer register.
+	TimerOverflow = 0;
+	cm = value;
 }
 
 ISR ( TIMER2_OVF_vect ) {
-	count++;
-	TCNT2 = -1;
+	TimerOverflow+= 1;
+	TCNT2 = 0;
 }
 
 void wait( int ms ) {
@@ -138,10 +123,9 @@ void wait( int ms ) {
 }
 
 void timer2Init(void) {
-	TCNT2 = -1;
-	TIMSK |= 0b01000000;
+	TIMSK |= 0b01000000; // Enable overflow interupt.
 	sei();
-	TCCR2 = 0b1000;
+	TCCR2 = 0b0000;
 }
 char test = 0;
 int main(void)
@@ -150,21 +134,27 @@ int main(void)
 	DDRA = 0b01;
 	DDRB = 0xFF;
 	
-	//EICRB |= 0b10110000; // set PE 6 and 7 to rising and falling respectively
-	//EIMSK |= 0b11000000; // enable pins 6 and 7.
-	//timer2Init();
+	EICRB |= 0b10110000; // set PE 6 and 7 to rising and falling respectively
+	EIMSK |= 0b11000000; // enable pins 6 and 7.
+	timer2Init();
 	//sei();
-	//init_4bits_mode();
-	//reset();
-	//set_cursor(0);
+	init_4bits_mode();
+	reset();
+	set_cursor(0);
 	//lcd_write_string("hello");
 	//PORTA = 0xff;
+		
 	while(1)
 	{
 		PORTA = 0b1;
 		//wait(1);
 		_delay_us(10);
 		PORTA = 0;
+		
+		reset();
+		sprintf(text, "%lu", cm);
+		lcd_write_string(text);
+		wait(1000);
 		//isReading = true;
 		//wait(1000);
 		
@@ -185,8 +175,5 @@ int main(void)
 		//wait(1000);
 		//fullCount = 0;
 	}
-	while(1) {
-	PORTA = 0xff;
-	wait(1000);
-	}
+	
 }
