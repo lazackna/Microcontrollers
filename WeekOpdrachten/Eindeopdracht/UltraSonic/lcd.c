@@ -49,7 +49,7 @@ void lcd_init_4bits_mode(void) {
 	// Step 4 (table 12)
 	PORTC = 0x00;   
 	lcd_en();
-	PORTC = 0xF0; // Lcd, blink and cursor on.
+	PORTC = 0b11000000; // Cursor and blink off.
 	lcd_en();
 
 	// Step 4 (table 12)

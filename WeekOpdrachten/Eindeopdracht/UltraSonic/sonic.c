@@ -12,11 +12,14 @@
 
 #define BIT(x)	(1 << (x))
 #define maxCm 60
+#define soundMultiplier 466.47
+#define rangeMultiplier 3
+
 
 #define  Trigger_pin 0 /* Trigger pin */
 long int TimerOverflow = 0;
 
-double cm = 0;
+double distance = 0; // distance in cm
 
 char * text;
 ISR ( INT6_vect ) {
@@ -30,9 +33,8 @@ ISR ( INT7_vect ) {
 	long long int value = TCNT2 + (255 * TimerOverflow); // don't forget to add the current value in the timer.
 	TCNT2 = 0;	// Clear the timer register.
 	TimerOverflow = 0;
-	double newCm = (double)value / 466.47;
 
-	cm = newCm;
+	distance = (double)value / soundMultiplier; 
 }
 
 /************************************************************************/
@@ -49,8 +51,8 @@ ISR ( TIMER2_OVF_vect ) {
 char isOn = 0;
 long long int timesCompare = 0;
 ISR ( TIMER0_COMP_vect ) {
-	if(cm > maxCm) return;
-	if(timesCompare > (cm / 3)) {
+	if(distance > maxCm) return;
+	if(timesCompare > (distance / rangeMultiplier)) {
 		if(isOn) {
 			isOn = 0;
 			PORTB = 1;
@@ -101,8 +103,9 @@ int main(void)
 		PORTA = 0b1;
 		_delay_us(10);
 		PORTA = 0;
-		int value = (int) cm;
-		sprintf(text, "%d", value);
+
+
+		sprintf(text, "%d", (int) distance);
 		lcd_write_string(text);
 		wait(100);
 	}
