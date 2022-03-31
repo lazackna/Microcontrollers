@@ -115,14 +115,21 @@ ISR ( TIMER2_OVF_vect ) {
 	TCNT2 = 0;
 }
 char isOn = 0;
+long long int timesCompare = 0;
+long long int times = 0;
+char isSoundOn = 0;
 ISR ( TIMER0_COMP_vect ) {
-	if(isOn) {
-		PORTB = 1;
-		isOn = 0;
-	} else {
-		PORTB = 0;
-		isOn = 1;
+	if(timesCompare > (cm / 4)) {
+		if(isOn) {
+			isOn = 0;
+			PORTB = 1;
+		} else {
+			PORTB = 0;
+			isOn = 1;
+		}
+		timesCompare = 0;
 	}
+	timesCompare++;
 }
 
 void wait( int ms ) {
@@ -133,14 +140,14 @@ void wait( int ms ) {
 
 void timer2Init(void) {
 	TIMSK |= 0b01000000; // Enable overflow interupt.
-
+	sei();
 	TCCR2 = 0b0000;
 }
 
 void timer0Init(void){
-	TCCR0 = 0b01001100; // Turn on fast PWM. Prescaler on 256.
+	TCCR0 = 0b00001011; // Turn on CTC. Prescaler on 256.
 	TIMSK |= BIT(1); // Set timer/counter 0 to compare match interupt. 31,250
-	//TCNT0 = -31.250 * 15;
+	OCR0 = 100;
 	DDRB = 0xFF;
 }
 
@@ -150,15 +157,15 @@ int main(void)
 	text = malloc(sizeof(char) * 255);
 	double distance = 0;
 	DDRA = 0b01;
-	
-	wait(10);
+	wait(1);
 	
 	EICRB |= 0b10110000; // set PE 6 and 7 to rising and falling respectively
 	EIMSK |= 0b11000000; // enable pins 6 and 7.
 	timer2Init();
 	timer0Init();
-	
-	sei();
+	init_4bits_mode();
+	//sei();
+	times = 100;
 	
 	wait(200);	
 	while(1)
@@ -166,12 +173,12 @@ int main(void)
 		PORTA = 0b1;
 		_delay_us(10);
 		PORTA = 0;
-		
-		for(int i = 0; i < 30; i++) {
-			TCNT0 = -31.250 * i;
-			wait(500);
-		}
-	
+		int value = (int) cm;
+		sprintf(text, "%d", value);
+		lcd_write_string(text);
+		wait(50);
+		//OCR0 = cm * 100;
+		//times = cm * 1000;
 	}
 	
 }
