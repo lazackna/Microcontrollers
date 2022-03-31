@@ -119,6 +119,7 @@ long long int timesCompare = 0;
 long long int times = 0;
 char isSoundOn = 0;
 ISR ( TIMER0_COMP_vect ) {
+	if(cm > 100) return;
 	if(timesCompare > (cm / 4)) {
 		if(isOn) {
 			isOn = 0;
@@ -176,7 +177,7 @@ int main(void)
 		int value = (int) cm;
 		sprintf(text, "%d", value);
 		lcd_write_string(text);
-		wait(50);
+		wait(100);
 		//OCR0 = cm * 100;
 		//times = cm * 1000;
 	}
