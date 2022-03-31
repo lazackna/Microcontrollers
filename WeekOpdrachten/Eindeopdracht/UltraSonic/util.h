@@ -1,7 +1,6 @@
-/*
- * util.h
- *
- * Created: 3/31/2022 2:15:35 PM
- *  Author: User
- */ 
+#ifndef UTIL_H
+#define UTIL_H
+
 void wait( int ms );
+
+#endif

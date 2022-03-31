@@ -4,7 +4,7 @@
 
 lcd.c
 
-sonic.c
+main.c
 
 util.c
 

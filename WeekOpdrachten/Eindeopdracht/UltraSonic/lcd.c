@@ -1,10 +1,3 @@
-/*
- * main.c
- *
- * Created: 2/9/2022 2:11:36 PM
- *  Author: User
- */ 
-
 #include "lcd.h"
 
 void set_cursor(int position){

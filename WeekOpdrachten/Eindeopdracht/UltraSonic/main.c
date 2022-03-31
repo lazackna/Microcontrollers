@@ -87,15 +87,18 @@ void timer0Init(void){
 
 int main(void)
 {
-	text = malloc(sizeof(char) * 255);
-	DDRA = 0b01;
-	wait(1);
 	
+	//init ports and interrupts
+	DDRA = 0b01;
 	EICRB |= 0b10110000; // set PE 6 and 7 to rising and falling respectively
 	EIMSK |= 0b11000000; // enable pins 6 and 7.
+	
+	//init timers and lcd
 	timer2Init();
 	timer0Init();
 	lcd_init_4bits_mode();
+	
+	text = malloc(sizeof(char) * LCD_MAX_CHARACTERS);
 	
 	wait(200);	
 	while(1)
@@ -103,7 +106,6 @@ int main(void)
 		PORTA = 0b1;
 		_delay_us(10);
 		PORTA = 0;
-
 
 		sprintf(text, "%d", (int) distance);
 		lcd_write_string(text);
