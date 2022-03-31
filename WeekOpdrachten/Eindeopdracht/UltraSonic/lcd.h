@@ -21,10 +21,10 @@
 
 void lcd_command ( unsigned char dat );
 void lcd_en(void);
-void init_4bits_mode(void);
+void lcd_init_4bits_mode(void);
 void lcd_write_string(const char *str);
 void lcd_write_data(unsigned char byte);
-void reset(void);
+void lcd_reset(void);
 void set_cursor(int position);
 
 #endif /* LCD_H_ */

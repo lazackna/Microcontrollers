@@ -12,7 +12,7 @@ void set_cursor(int position){
 }
 
 void lcd_write_string(const char *str) {
-	reset();
+	lcd_reset();
 	set_cursor(0);
 	for(;*str; str++){
 		lcd_write_data(*str);
@@ -31,7 +31,7 @@ void lcd_write_data(unsigned char byte) {
 	lcd_en();
 }
 
-void init_4bits_mode(void) {
+void lcd_init_4bits_mode(void) {
 	// PORTC output mode and all low (also E and RS pin)
 	DDRC = 0xFF;
 	PORTC = 0x00;
@@ -60,7 +60,7 @@ void init_4bits_mode(void) {
 
 }
 
-void reset(void){
+void lcd_reset(void){
 	
 	PORTC = 0x00;
 	lcd_en();

@@ -147,10 +147,10 @@
     <Compile Include="sonic.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="sound.c">
+    <Compile Include="util.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="sound.h">
+    <Compile Include="util.h">
       <SubType>compile</SubType>
     </Compile>
   </ItemGroup>
