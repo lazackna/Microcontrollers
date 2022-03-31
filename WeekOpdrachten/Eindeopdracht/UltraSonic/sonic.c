@@ -8,6 +8,7 @@
 #include <stdio.h>
 
 #include "util.h"
+#include "lcd.h"
 
 #define BIT(x)	(1 << (x))
 #define maxCm 60
